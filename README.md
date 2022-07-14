@@ -19,7 +19,6 @@ Background Context
 Write your own printf function.
 
 
-
 Resources
 Read or watch:
 
