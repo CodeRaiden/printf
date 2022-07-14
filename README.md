@@ -20,8 +20,6 @@ Write your own printf function.
 
 
 
-^ In this picture, Kris, and Jul
-
 Resources
 Read or watch:
 
@@ -164,3 +162,7 @@ You don’t have to handle the length modifiersPrintf Project
 Repo:
 
 GitHub repository: printf
+
+Collaborators: Kenneth Igbo, Hanna Kassa
+
+
