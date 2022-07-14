@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include "main.h"
 /**
-* print_bin - converts to binary
-* @b: the number in decinal
+* print_bin - convert to binary
+* @b: number in decimal
 * Return: number of chars printed
 */
 int print_bin(va_list b)
