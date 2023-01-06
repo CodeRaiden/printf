@@ -1,52 +1,49 @@
 #include "main.h"
 
 /**
- * _printf - prints formatted data to stdout
- * @format: string that contains the format to print
- * Return: number of characters written
+ * _printf - print arguments according to a format
+ * @format: a string composed of ordinary characters and format specifications
+ *
+ * Return: Upon success, this returns the number of characters printed.
+ * If an output error is encountered, -1 is returned instead.
  */
-int _printf(char *format, ...)
+int _printf(const char *format, ...)
 {
-	int written = 0, (*structype)(char *, va_list);
-	char q[3];
-	va_list pa;
+	va_list arguments;
+	int (*print_func)(va_list);
+	int charCounter, lastRetVal;
 
-	if (format == NULL)
+	if (!format)
 		return (-1);
-	q[2] = '\0';
-	va_start(pa, format);
-	_putchar(-1);
-	while (format[0])
+
+	va_start(arguments, format);
+	for (charCounter = 0; *format; ++format)
 	{
-		if (format[0] == '%')
+		if (*format == '%')
 		{
-			structype = driver(format);
-			if (structype)
+			if (!format[1])
+				return (-1);
+
+			print_func = get_print_func(format[1]);
+			if (print_func)
 			{
-				q[0] = '%';
-				q[1] = format[1];
-				written += structype(q, pa);
+				lastRetVal = print_func(arguments);
+				if (lastRetVal < 0)
+					return (-1);
+				charCounter += lastRetVal;
+				++format;
+				continue;
 			}
-			else if (format[1] != '\0')
-			{
-				written += _putchar('%');
-				written += _putchar(format[1]);
-			}
-			else
-			{
-				written += _putchar('%');
-				break;
-			}
-			format += 2;
+			lastRetVal = _putchar(*format++);
+			if (lastRetVal < 0)
+				return (-1);
+			charCounter += lastRetVal;
 		}
-		else
-		{
-			written += _putchar(format[0]);
-			format++;
-		}
+		lastRetVal = _putchar(*format);
+		if (lastRetVal < 0)
+			return (-1);
+		charCounter += lastRetVal;
 	}
-	_putchar(-2);
-	return (written);
+	va_end(arguments);
+	return (charCounter);
 }
-
-
